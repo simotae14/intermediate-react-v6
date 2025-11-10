@@ -1,9 +1,10 @@
 import { AsyncDatabase } from "promised-sqlite3";
+import postNote from "./postNote";
 
 export default async function WritePage() {
   async function getUsers() {
     const db = await AsyncDatabase.open("./notes.db");
-    await db.all("SELECT * FROM users");
+    return await db.all("SELECT * FROM users");
   }
 
   const users = await getUsers();
@@ -12,7 +13,7 @@ export default async function WritePage() {
     <div>
       <fieldset className="note-fieldset">
         <legend>Write a new note</legend>
-        <form className="note-form">
+        <form action={postNote} className="note-form">
           <label>
             From
             <select name="from_user">
